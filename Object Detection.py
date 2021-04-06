@@ -1,4 +1,5 @@
-# Object Detection
+# Real-time Mask Detector
+# A Practice applying Neural Network for Object Detection
 # Yangjia Li (Francis)
 # March 29, 2021
 
@@ -10,10 +11,24 @@ import torchvision
 from torchvision import datasets, transforms, models
 import matplotlib.pyplot as plt
 import numpy as np
-import
-
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 
+""" General Idea
+
+Locate objects in the image; apply image classifier for labelling each object
+
+Two main approaches for locating objects
+- Single-shot detection. Ex. YOLO
+    Higher speed
+- Two-shot detection. Apply regional proposal model before detection.
+    Better performance
+
+A hybrid model R-FCN (Region-Based Fully Convolutional Networks) is also recommended.
+Basically a TSD architecture with some SSD features
+
+
+
+"""
 # load a model pre-trained pre-trained on COCO
 model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
 
