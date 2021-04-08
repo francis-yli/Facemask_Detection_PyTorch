@@ -2,7 +2,7 @@
 # label images in different classes after unzipping the dataset
 # Author: Yangjia Li (Francis)
 # Date: Apr. 06, 2021
-# Last_Modified: Apr. 07, 2021
+# Last_Modified: Apr. 08, 2021
 
 import cv2
 import pandas as pd
@@ -29,10 +29,11 @@ for image_folder in tqdm(list(nomask_path.iterdir()), desc='non mask photos'):
 for image_folder in tqdm(list(mask_path.iterdir()), desc='mask photos'):
     for image_iter in image_folder.iterdir():
         image = cv2.imread(str(image_iter))
-        mask_dataframe = mask_dataframe.apend({
+        mask_dataframe = mask_dataframe.append({
             'image': image,
             'mask': 1
         }, ignore_index=True)
 
 # store as 'serialized dataset'
-mask_dataframe.to_pickle(dataset_path/'dataset_serialized')
+# pickling => convert an object hierarchy into a byte stream
+mask_dataframe.to_pickle(dataset_path/'mask.pkl')
