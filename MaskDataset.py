@@ -1,9 +1,15 @@
-# MaskDataset
-# given classified dataset, resize images and convert to set of tensors
-# which is the form accepted by PyTorch NN
+# prep_dataset
+# class and method for preparing pkl data to neural network 
 # Author: Yangjia Li (Francis)
 # Date: Apr. 08, 2021
 # Last_Modified: Apr. 08, 2021
+
+'''Contains:
+class MaskDataset:
+    input: .pkl dataset
+    output: tensor data
+
+'''
 
 import cv2
 import numpy as np
@@ -12,8 +18,8 @@ from torch.utils.data.dataset import Dataset
 from torchvision.transforms import Compose, Resize, ToPILImage, ToTensor
 
 class MaskDataset(Dataset):
-    def __init__(self, dataFrame):
-        self.dataFrame = dataFrame
+    def __init__(self, dataframe):
+        self.dataframe = dataframe
         
         self.transformations = Compose([
             ToPILImage(),
@@ -25,7 +31,7 @@ class MaskDataset(Dataset):
         if isinstance(key, slice):
             raise NotImplementedError('slicing is not supported')
         
-        row = self.dataFrame.iloc[key]
+        row = self.dataframe.iloc[key]
         image = cv2.imdecode(np.fromfile(row['image'], dtype=np.uint8), cv2.IMREAD_UNCHANGED)
         return {
             'image': self.transformations(image),
@@ -33,7 +39,7 @@ class MaskDataset(Dataset):
         }
     
     def __len__(self):
-        return len(self.dataFrame.index)
+        return len(self.dataframe.index)
 
 def 
 
