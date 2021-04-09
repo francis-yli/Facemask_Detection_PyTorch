@@ -1,8 +1,8 @@
-# Real-time Mask Detector
+# Mask Detector
 # A Practice applying Neural Network for Object Detection
-# Yangjia Li (Francis)
-# March 29, 2021
-
+# Author: Yangjia Li (Francis)
+# Date: Mar. 29, 2021
+# Last Modeified: 
 import torch
 from torch import nn
 from torch import optim
@@ -23,7 +23,7 @@ Two main approaches for locating objects
 - Two-shot detection. Apply regional proposal model before detection.
     Better performance
 
-A hybrid model R-FCN (Region-Based Fully Convolutional Networks) is also recommended.
+Hybrid model like R-FCN (Region-Based Fully Convolutional Networks) is also recommended.
 Basically a TSD architecture with some SSD features
 
 
