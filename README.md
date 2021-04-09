@@ -1,2 +1,2 @@
 # Object-Detection_PyTorch
-A practice on object detection applying YOLO model
+A practice on applying object detection neural network for mask detection
