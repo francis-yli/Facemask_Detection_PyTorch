@@ -8,7 +8,7 @@
 class MaskDataset:
     input: .pkl dataset
     output: tensor data
-
+    c
 '''
 
 import cv2
