@@ -12,6 +12,7 @@ class MaskDataset:
 
 import cv2
 import numpy as np
+import pandas as pd
 from torch import long, tensor
 from torch.utils.data.dataset import Dataset
 from torchvision.transforms import Compose, Resize, ToPILImage, ToTensor
@@ -40,8 +41,8 @@ class MaskDataset(Dataset):
     def __len__(self):
         return len(self.dataframe.index)
 
-def 
-
+def train_test_split():
+    
 
 def prepare_data(self) -> None:
     self.maskDF = maskDF = pd.read_pickle(self.maskDFPath)
