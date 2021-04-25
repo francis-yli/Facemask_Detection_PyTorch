@@ -1,7 +1,11 @@
 # prep_dataset
-# class and method for preparing pkl data to neural network 
+# class of mask dataset
+# prepars pkl data to neural network 
 # Author: Yangjia Li (Francis)
 # Date: Apr. 08, 2021
+<<<<<<< HEAD
+# Last_Modified: Apr. 25, 2021
+=======
 # Last_Modified: Apr. 08, 2021
 
 '''Contains:
@@ -9,6 +13,7 @@ class MaskDataset:
     input: .pkl dataset
     output: tensor data
 '''
+>>>>>>> 9bf70a2e21165a86c876d52f3ec95c697392dc10
 
 import cv2
 import numpy as np
@@ -18,6 +23,10 @@ from torch.utils.data.dataset import Dataset
 from torchvision.transforms import Compose, Resize, ToPILImage, ToTensor
 
 class MaskDataset(Dataset):
+    ''' 0 for 'no masks'; 1 for 'masks'
+    input: .pkl dataset
+    output: tensor data
+    '''
     def __init__(self, dataframe):
         self.dataframe = dataframe
         
