@@ -1,13 +1,11 @@
 """ Detect people wearing masks in videos
 """
 from pathlib import Path
-
 import click
 import cv2
 import torch
 from skvideo.io import FFmpegWriter, vreader
 from torchvision.transforms import Compose, Resize, ToPILImage, ToTensor
-
 import face_detector
 from train_model import MaskDetector
 
