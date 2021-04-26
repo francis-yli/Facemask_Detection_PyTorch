@@ -2,7 +2,7 @@
 # label images in different classes after unzipping the dataset
 # Author: Yangjia Li (Francis)
 # Date: Apr. 06, 2021
-# Last_Modified: Apr. 25, 2021
+# Last_Modified: Apr. 26, 2021
 
 import cv2
 import pandas as pd
@@ -35,6 +35,6 @@ for img_folder in tqdm(list(mask_path.iterdir()), desc='mask photos'):
 
 # store as 'serialized dataset'
 # pickling => convert an object hierarchy into a byte stream
-dataframe_name = 'C:/Users/franc/Documents/Dataset/maskdata.pkl'
-print(f'saving Dataframe to: {dataframe_name}')
-mask_dataframe.to_pickle('dataframe_name')
+dataframe_dir = 'C:/Users/franc/Documents/Dataset/maskdata.pkl'
+mask_dataframe.to_pickle(dataframe_dir)
+print(f'saving Dataframe to: {dataframe_dir}')

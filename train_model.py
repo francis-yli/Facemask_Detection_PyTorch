@@ -66,7 +66,7 @@ class MaskDetector(pl.LightningModule):
     def forward(self, x: Tensor): # pylint: disable=arguments-differ
         """ forward pass
         """
-        out = self.convLayer1(x)
+        out = self.convLayer1(x) 
         out = self.convLayer2(out)
         out = self.convLayer3(out)
         out = out.view(-1, 2048)
@@ -76,13 +76,13 @@ class MaskDetector(pl.LightningModule):
     def prepare_data(self) -> None:
         self.maskDF = maskDF = pd.read_pickle(self.maskDFPath)
         train, validate = train_test_split(maskDF, test_size=0.3, random_state=0,
-                                           stratify=maskDF['mask'])
+                                           stratify=maskDF['mask_label'])
         self.trainDF = MaskDataset(train)
         self.validateDF = MaskDataset(validate)
         
         # Create weight vector for CrossEntropyLoss
-        maskNum = maskDF[maskDF['mask']==1].shape[0]
-        nonMaskNum = maskDF[maskDF['mask']==0].shape[0]
+        maskNum = maskDF[maskDF['mask_label']==1].shape[0]
+        nonMaskNum = maskDF[maskDF['mask_label']==0].shape[0]
         nSamples = [nonMaskNum, maskNum]
         normedWeights = [1 - (x / sum(nSamples)) for x in nSamples]
         self.crossEntropyLoss = CrossEntropyLoss(weight=torch.tensor(normedWeights))
@@ -102,7 +102,7 @@ class MaskDetector(pl.LightningModule):
         outputs = self.forward(inputs)
         loss = self.crossEntropyLoss(outputs, labels)
         
-        tensorboardLogs = {'train_loss': loss}
+        tensorboardLogs = self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True) #{'train_loss': loss}
         return {'loss': loss, 'log': tensorboardLogs}
     
     def validation_step(self, batch: dict, _batch_idx: int) -> Dict[str, Tensor]: # pylint: disable=arguments-differ
@@ -121,7 +121,10 @@ class MaskDetector(pl.LightningModule):
             -> Dict[str, Union[Tensor, Dict[str, Tensor]]]:
         avgLoss = torch.stack([x['val_loss'] for x in outputs]).mean()
         avgAcc = torch.stack([x['val_acc'] for x in outputs]).mean()
-        tensorboardLogs = {'val_loss': avgLoss, 'val_acc':avgAcc}
+
+        values = {'val_loss': avgLoss, 'val_acc':avgAcc}
+        tensorboardLogs = self.log_dict(values)
+
         return {'val_loss': avgLoss, 'log': tensorboardLogs}
 
 if __name__ == '__main__':

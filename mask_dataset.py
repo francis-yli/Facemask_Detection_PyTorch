@@ -35,7 +35,7 @@ class MaskDataset(Dataset):
         image = cv2.imdecode(np.fromfile(row['image'], dtype=np.uint8), cv2.IMREAD_UNCHANGED)
         return {
             'image': self.transformations(image),
-            'mask': tensor([row['mask']], dtype=long), # pylint: disable=not-callable
+            'mask': tensor([row['mask_label']], dtype=long), # pylint: disable=not-callable
         }
     
     def __len__(self):
@@ -44,6 +44,6 @@ class MaskDataset(Dataset):
 def prepare_data(self) -> None:
     self.maskDF = maskDF = pd.read_pickle(self.maskDFPath)
     train, validate = train_test_split(maskDF, test_size=0.3, random_state=0,
-                                       stratify=maskDF['mask'])
+                                       stratify=maskDF['mask_label'])
     self.trainDF = MaskDataset(train)
     self.validateDF = MaskDataset(validate)
