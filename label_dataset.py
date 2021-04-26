@@ -19,22 +19,22 @@ mask_dataframe = pd.DataFrame()
 
 # iterate over folders and subfolders in nomask and mask dataset.
 # label nomask images with '0' and mask images with '1'
-for img_folder in tqdm(list(mask_path.iterdir()), desc='mask photos'):
-    for img_path in img_folder.iterdir():
-        maskDF = maskDF.append({
-            'image': str(img_path),
-            'mask_label': 1
-        }, ignore_index=True)
-
 for img_folder in tqdm(list(nomask_path.iterdir()), desc='non mask photos'):
-    for imgPath in img_folder.iterdir():
-        maskDF = maskDF.append({
+    for img_path in img_folder.iterdir():
+        mask_dataframe = mask_dataframe.append({
             'image': str(img_path),
             'mask_label': 0
+        }, ignore_index=True)
+
+for img_folder in tqdm(list(mask_path.iterdir()), desc='mask photos'):
+    for img_path in img_folder.iterdir():
+        mask_dataframe = mask_dataframe.append({
+            'image': str(img_path),
+            'mask_label': 1
         }, ignore_index=True)
 
 # store as 'serialized dataset'
 # pickling => convert an object hierarchy into a byte stream
 dataframe_name = 'C:/Users/franc/Documents/Dataset/maskdata.pkl'
-print(f'saving Dataframe to: {dataframe_name)}')
+print(f'saving Dataframe to: {dataframe_name}')
 mask_dataframe.to_pickle('dataframe_name')

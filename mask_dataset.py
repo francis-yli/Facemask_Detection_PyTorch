@@ -3,17 +3,7 @@
 # prepars pkl data to neural network 
 # Author: Yangjia Li (Francis)
 # Date: Apr. 08, 2021
-<<<<<<< HEAD
 # Last_Modified: Apr. 25, 2021
-=======
-# Last_Modified: Apr. 08, 2021
-
-'''Contains:
-class MaskDataset:
-    input: .pkl dataset
-    output: tensor data
-'''
->>>>>>> 9bf70a2e21165a86c876d52f3ec95c697392dc10
 
 import cv2
 import numpy as np
@@ -21,6 +11,7 @@ import pandas as pd
 from torch import long, tensor
 from torch.utils.data.dataset import Dataset
 from torchvision.transforms import Compose, Resize, ToPILImage, ToTensor
+from sklearn.model_selection import train_test_split
 
 class MaskDataset(Dataset):
     ''' 0 for 'no masks'; 1 for 'masks'
@@ -49,9 +40,6 @@ class MaskDataset(Dataset):
     
     def __len__(self):
         return len(self.dataframe.index)
-
-def train_test_split():
-    
 
 def prepare_data(self) -> None:
     self.maskDF = maskDF = pd.read_pickle(self.maskDFPath)

@@ -17,7 +17,7 @@ from torch.optim import Adam
 from torch.optim.optimizer import Optimizer
 from torch.utils.data import DataLoader
 
-import MaskDataset
+from mask_dataset import MaskDataset
 
 
 class MaskDetector(pl.LightningModule):
@@ -128,7 +128,8 @@ if __name__ == '__main__':
     model = MaskDetector('C:/Users/franc/Documents/Dataset/maskdata.pkl')
     
     checkpoint_callback = ModelCheckpoint(
-        filepath='C:/Users/franc/Documents/Inventory/Object-Detection_PyTorch/weights.ckpt',
+        dirpath='C:/Users/franc/Documents/Inventory/Object-Detection_PyTorch/',
+        filename='weights.ckpt',
         save_weights_only=True,
         verbose=True,
         monitor='val_acc',
