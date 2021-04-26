@@ -101,9 +101,8 @@ class MaskDetector(pl.LightningModule):
         labels = labels.flatten()
         outputs = self.forward(inputs)
         loss = self.crossEntropyLoss(outputs, labels)
-        
-        tensorboardLogs = self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True) #{'train_loss': loss}
-        return {'loss': loss, 'log': tensorboardLogs}
+        self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True) #{'train_loss': loss}
+        return {'loss': loss}
     
     def validation_step(self, batch: dict, _batch_idx: int) -> Dict[str, Tensor]: # pylint: disable=arguments-differ
         inputs, labels = batch['image'], batch['mask']
@@ -117,22 +116,17 @@ class MaskDetector(pl.LightningModule):
         
         return {'val_loss': loss, 'val_acc':valAcc}
     
-    def validation_epoch_end(self, outputs: List[Dict[str, Tensor]]) \
-            -> Dict[str, Union[Tensor, Dict[str, Tensor]]]:
+    def validation_epoch_end(self, outputs: List[Dict[str, Tensor]]) -> None:
         avgLoss = torch.stack([x['val_loss'] for x in outputs]).mean()
         avgAcc = torch.stack([x['val_acc'] for x in outputs]).mean()
-
-        values = {'val_loss': avgLoss, 'val_acc':avgAcc}
-        tensorboardLogs = self.log_dict(values)
-
-        return {'val_loss': avgLoss, 'log': tensorboardLogs}
+        self.log_dict({'val_loss': avgLoss, 'val_acc':avgAcc})
 
 if __name__ == '__main__':
     model = MaskDetector('C:/Users/franc/Documents/Dataset/maskdata.pkl')
     
     checkpoint_callback = ModelCheckpoint(
-        dirpath='C:/Users/franc/Documents/Inventory/Object-Detection_PyTorch/',
-        filename='weights.ckpt',
+        dirpath='C:/Users/franc/Documents/Code/Facemask_Detection_PyTorch/',
+        filename='model_weights',
         save_weights_only=True,
         verbose=True,
         monitor='val_acc',

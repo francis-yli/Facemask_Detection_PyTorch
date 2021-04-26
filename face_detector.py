@@ -1,16 +1,13 @@
 """ Face detection using neural network
 """
 from pathlib import Path
-
 import numpy as np
 import cv2
-
 
 class FaceDetectorException(Exception):
     """ generic default exception
     """
-
-
+    
 class FaceDetector:
     """ Face Detector class
     """

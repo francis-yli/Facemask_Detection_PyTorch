@@ -5,4 +5,5 @@ res10_300x300_ssd_iter_140000.caffemodel
 face_mask_model.ckpt
 deploy.prototxt.txt
 lightning_logs
+model_weights.ckpt
 test.py
