@@ -1,15 +1,19 @@
-""" Detect people wearing masks in videos
-"""
+# detect_face_video
+# detect people with facemasks in video
+# Author: Yangjia Li (Francis)
+# Date: Apr. 25, 2021
+# Last Modeified: 
+
 from pathlib import Path
 import click
 import cv2
 import torch
 from skvideo.io import FFmpegWriter, vreader
 from torchvision.transforms import Compose, Resize, ToPILImage, ToTensor
-import face_detector
+from face_detector import FaceDetector
 from train_model import MaskDetector
 
-
+# add command line calls via click
 @click.command(help="""
                     modelPath: path to model.ckpt\n
                     videoPath: path to video file to annotate
@@ -19,7 +23,8 @@ from train_model import MaskDetector
 @click.option('--output', 'outputPath', type=Path,
               help='specify output path to save video with annotations')
 @torch.no_grad()
-def tagVideo(modelpath, videopath, outputPath=None):
+
+def tag_facemasks_video(modelpath, videopath, outputPath=None):
     """ detect if persons in video are wearing masks or not
     """
     model = MaskDetector()
@@ -29,9 +34,9 @@ def tagVideo(modelpath, videopath, outputPath=None):
     model = model.to(device)
     model.eval()
     
-    faceDetector = face_detector(
-        prototype='C:/Users/franc/Documents/Inventory/Object-Detection_PyTorch/deploy.prototxt.txt',
-        model='C:/Users/franc/Documents/Inventory/Object-Detection_PyTorch/res10_300x300_ssd_iter_140000.caffemodel',
+    faceDetector = FaceDetector(
+        prototype='C:/Users/franc/Documents/Code/Facemask_Detection_PyTorch/deploy.prototxt.txt',
+        model='C:/Users/franc/Documents/Code/Facemask_Detection_PyTorch/res10_300x300_ssd_iter_140000.caffemodel',
     )
     
     transformations = Compose([
@@ -45,7 +50,7 @@ def tagVideo(modelpath, videopath, outputPath=None):
     
     font = cv2.FONT_HERSHEY_SIMPLEX
     cv2.namedWindow('main', cv2.WINDOW_NORMAL)
-    labels = ['No mask', 'Mask']
+    labels = ['No mask', 'Has Mask']
     labelColor = [(10, 0, 255), (10, 255, 0)]
     for frame in vreader(str(videopath)):
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -88,4 +93,4 @@ def tagVideo(modelpath, videopath, outputPath=None):
 
 # pylint: disable=no-value-for-parameter
 if __name__ == '__main__':
-    tagVideo()
+    tag_facemasks_video()

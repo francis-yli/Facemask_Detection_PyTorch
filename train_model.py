@@ -1,5 +1,9 @@
-""" Training model
-"""
+# train_model
+# Constract neural network and train model
+# Author: Yangjia Li (Francis)
+# Date: Apr. 25, 2021
+# Last Modeified: 
+
 from pathlib import Path
 from typing import Dict, List, Union
 import pandas as pd
@@ -104,7 +108,7 @@ class MaskDetector(pl.LightningModule):
         self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True) #{'train_loss': loss}
         return {'loss': loss}
     
-    def validation_step(self, batch: dict, _batch_idx: int) -> Dict[str, Tensor]: # pylint: disable=arguments-differ
+    def validation_step(self, batch: dict, _batch_idx: int) -> Dict[str, Tensor]:
         inputs, labels = batch['image'], batch['mask']
         labels = labels.flatten()
         outputs = self.forward(inputs)

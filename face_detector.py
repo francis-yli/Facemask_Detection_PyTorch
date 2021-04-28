@@ -1,3 +1,9 @@
+# face_detector
+# face detector class using nerual network
+# Author: Yangjia Li (Francis)
+# Date: Apr. 25, 2021
+# Last Modeified: 
+
 """ Face detection using neural network
 """
 from pathlib import Path
@@ -9,16 +15,13 @@ class FaceDetectorException(Exception):
     """
     
 class FaceDetector:
-    """ Face Detector class
-    """
     def __init__(self, prototype: Path=None, model: Path=None,
                  confidenceThreshold: float=0.6):
         self.prototype = prototype
         self.model = model
         self.confidenceThreshold = confidenceThreshold
         if self.prototype is None:
-            raise FaceDetectorException("please specify prototype '.prototxt.txt' file "
-                                        "path")
+            raise FaceDetectorException("please specify prototype '.prototxt.txt' file path")
         if self.model is None:
             raise FaceDetectorException("please specify model '.caffemodel' file path")
         self.classifier = cv2.dnn.readNetFromCaffe(str(prototype), str(model))
