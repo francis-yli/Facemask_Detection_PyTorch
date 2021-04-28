@@ -17,10 +17,10 @@ class FaceDetector:
         self.model = model
         self.confidenceThreshold = confidenceThreshold
         if self.prototype is None:
-            raise FaceDetectorException("must specify prototype '.prototxt.txt' file "
+            raise FaceDetectorException("please specify prototype '.prototxt.txt' file "
                                         "path")
         if self.model is None:
-            raise FaceDetectorException("must specify model '.caffemodel' file path")
+            raise FaceDetectorException("please specify model '.caffemodel' file path")
         self.classifier = cv2.dnn.readNetFromCaffe(str(prototype), str(model))
     
     def detect(self, image):
