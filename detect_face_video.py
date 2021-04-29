@@ -15,20 +15,20 @@ from train_model import MaskDetector
 
 # add command line calls via click
 @click.command(help="""
-                    modelPath: path to model.ckpt\n
-                    videoPath: path to video file to annotate
+                    model_path: path to model.ckpt\n
+                    video_path: path to video file
                     """)
-@click.argument('modelpath')
-@click.argument('videopath')
-@click.option('--output', 'outputPath', type=Path,
-              help='specify output path to save video with annotations')
-@torch.no_grad()
+@click.argument('model_path')
+@click.argument('video_path')
+@click.option('--output', 'output_path', type=Path,
+              help='please specify output path to save the video')
+@torch.no_grad() # reduce memory consumption
 
-def tag_facemasks_video(modelpath, videopath, outputPath=None):
+def tag_facemasks_video(model_path, video_path, output_path=None):
     """ detect if persons in video are wearing masks or not
     """
     model = MaskDetector()
-    model.load_state_dict(torch.load(modelpath)['state_dict'], strict=False)
+    model.load_state_dict(torch.load(model_path)['state_dict'], strict=False)
     
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
@@ -45,14 +45,14 @@ def tag_facemasks_video(modelpath, videopath, outputPath=None):
         ToTensor(),
     ])
     
-    if outputPath:
-        writer = FFmpegWriter(str(outputPath))
+    if output_path:
+        writer = FFmpegWriter(str(output_path))
     
-    font = cv2.FONT_HERSHEY_SIMPLEX
-    cv2.namedWindow('main', cv2.WINDOW_NORMAL)
+    font = cv2.FONT_HERSHEY_TRIPLEX
+    cv2.namedWindow('facemask detection', cv2.WINDOW_FREERATIO)
     labels = ['No mask', 'Has Mask']
     labelColor = [(10, 0, 255), (10, 255, 0)]
-    for frame in vreader(str(videopath)):
+    for frame in vreader(str(video_path)):
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         faces = faceDetector.detect(frame)
         for face in faces:
@@ -62,8 +62,8 @@ def tag_facemasks_video(modelpath, videopath, outputPath=None):
             xStart, yStart = max(xStart, 0), max(yStart, 0)
             
             # predict mask label on extracted face
-            faceImg = frame[yStart:yStart+height, xStart:xStart+width]
-            output = model(transformations(faceImg).unsqueeze(0).to(device))
+            face_img = frame[yStart:yStart+height, xStart:xStart+width]
+            output = model(transformations(face_img).unsqueeze(0).to(device))
             _, predicted = torch.max(output.data, 1)
             
             # draw face frame
@@ -71,7 +71,7 @@ def tag_facemasks_video(modelpath, videopath, outputPath=None):
                           (xStart, yStart),
                           (xStart + width, yStart + height),
                           (126, 65, 64),
-                          thickness=2)
+                          thickness=4)
             
             # center text according to the face frame
             textSize = cv2.getTextSize(labels[predicted], font, 1, 2)[0]
@@ -82,12 +82,12 @@ def tag_facemasks_video(modelpath, videopath, outputPath=None):
                         labels[predicted],
                         (textX, yStart-20),
                         font, 1, labelColor[predicted], 2)
-        if outputPath:
+        if output_path:
             writer.writeFrame(cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
-        cv2.imshow('main', frame)
+        cv2.imshow('facemask detection', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-    if outputPath:
+    if output_path:
         writer.close()
     cv2.destroyAllWindows()
 
