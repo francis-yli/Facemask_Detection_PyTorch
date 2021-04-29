@@ -34,7 +34,7 @@ def tag_facemasks_video(model_path, video_path, output_path=None):
     model = model.to(device)
     model.eval()
     
-    faceDetector = FaceDetector(
+    FaceDetector = FaceDetector(
         prototype='C:/Users/franc/Documents/Code/Facemask_Detection_PyTorch/deploy.prototxt.txt',
         model='C:/Users/franc/Documents/Code/Facemask_Detection_PyTorch/res10_300x300_ssd_iter_140000.caffemodel',
     )
@@ -54,7 +54,7 @@ def tag_facemasks_video(model_path, video_path, output_path=None):
     labelColor = [(10, 0, 255), (10, 255, 0)]
     for frame in vreader(str(video_path)):
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        faces = faceDetector.detect(frame)
+        faces = FaceDetector.detect(frame)
         for face in faces:
             xStart, yStart, width, height = face
             
@@ -91,6 +91,6 @@ def tag_facemasks_video(model_path, video_path, output_path=None):
         writer.close()
     cv2.destroyAllWindows()
 
-# pylint: disable=no-value-for-parameter
+
 if __name__ == '__main__':
     tag_facemasks_video()
