@@ -16,6 +16,6 @@ python -m detect_face_video [model path] [video path]
 ```
 
 ## Dataset
-The dataset I used for training was from [RWFD](Real-World-Masked-Face-Dataset) Dataset.
+The dataset I used for training was from [RWFD](https://github.com/X-zhangyang/Real-World-Masked-Face-Dataset) Dataset.
 
 Another way to implement this task could be using dataset of faces and dataset of faces with photoshopped masks. I saw several posts using such dataset have good results.
