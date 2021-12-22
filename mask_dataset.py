@@ -2,8 +2,8 @@
 # class of mask dataset
 # prepars pkl data to neural network 
 # Author: Yangjia Li (Francis)
-# Date: Apr. 08, 2021
-# Last_Modified: Apr. 25, 2021
+# Date: 
+# Last_Modified: 
 
 import cv2
 import numpy as np

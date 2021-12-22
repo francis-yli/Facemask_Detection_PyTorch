@@ -1,7 +1,7 @@
 # Mask Detector
 # A Practice applying Neural Network for Object Detection
 # Author: Yangjia Li (Francis)
-# Date: Mar. 29, 2021
+# Date: 
 # Last Modeified: 
 import torch
 from torch import nn

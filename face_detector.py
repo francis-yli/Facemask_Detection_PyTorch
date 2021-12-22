@@ -1,7 +1,7 @@
 # face_detector
 # face detector class using nerual network
 # Author: Yangjia Li (Francis)
-# Date: Apr. 25, 2021
+# Date: 
 # Last Modeified: 
 
 """ Face detection using neural network
@@ -41,6 +41,6 @@ class FaceDetector:
             if confidence < self.confidenceThreshold:
                 continue
             box = detections[0, 0, i, 3:7] * np.array([width, height, width, height])
-            startX, startY, endX, endY = box.astype("int")
-            faces.append(np.array([startX, startY, endX-startX, endY-startY]))
+            x_start, y_start, x_end, y_end = box.astype("int")
+            faces.append(np.array([x_start, y_start, x_end-x_start, y_end-y_start]))
         return faces

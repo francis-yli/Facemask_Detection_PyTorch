@@ -11,7 +11,7 @@ from tqdm import tqdm
 
 # TODO: download and unzip images
 # path to the dataset
-# 
+# data set used is 'Real-World Masked Face Dataset' from github
 dataset_path = Path('C:/Users/franc/Documents/Dataset/real_face_mask')
 mask_path = dataset_path/'with_mask'
 nomask_path = dataset_path/'without_mask'

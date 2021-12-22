@@ -1,7 +1,7 @@
 # train_model
 # Constract neural network and train model
 # Author: Yangjia Li (Francis)
-# Date: Apr. 25, 2021
+# Date: 
 # Last Modeified: 
 
 from pathlib import Path

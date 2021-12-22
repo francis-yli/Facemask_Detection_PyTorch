@@ -1,7 +1,7 @@
 # detect_face_video
 # detect people with facemasks in video
 # Author: Yangjia Li (Francis)
-# Date: Apr. 25, 2021
+# Date: 
 # Last Modeified: 
 
 from pathlib import Path
