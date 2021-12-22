@@ -17,6 +17,8 @@ python -m detect_face_video [model path] [video path]
 
 [Test Video](https://github.com/francis-yli/Facemask_Detection_PyTorch/blob/main/facemask_test_video.mov)
 
+(Probably need to click 'view raw' and download the video to your local device for viewing.)
+
 ## Dataset
 The dataset I used for training was from [RWFD](https://github.com/X-zhangyang/Real-World-Masked-Face-Dataset) Dataset.
 
