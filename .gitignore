@@ -6,4 +6,3 @@ face_mask_model.ckpt
 deploy.prototxt.txt
 lightning_logs
 model_weights.ckpt
-test.py
