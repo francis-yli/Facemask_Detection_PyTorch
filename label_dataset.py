@@ -1,8 +1,8 @@
 # label_dataset
 # label images in different classes after unzipping the dataset
 # Author: Yangjia Li (Francis)
-# Date: Apr. 06, 2021
-# Last_Modified: Apr. 26, 2021
+# Date: 
+# Last_Modified: 
 
 import cv2
 import pandas as pd
@@ -11,7 +11,8 @@ from tqdm import tqdm
 
 # TODO: download and unzip images
 # path to the dataset
-dataset_path = Path(r'C:\Users\franc\Documents\Dataset\real_face_mask')
+# 
+dataset_path = Path('C:/Users/franc/Documents/Dataset/real_face_mask')
 mask_path = dataset_path/'with_mask'
 nomask_path = dataset_path/'without_mask'
 
