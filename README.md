@@ -15,7 +15,7 @@ python -m detect_face_video [model path] [video path]
 
 ## Video example
 
-![](facemask_test_video.mov)
+[Test Video](https://github.com/francis-yli/Facemask_Detection_PyTorch/blob/main/facemask_test_video.mov)
 
 ## Dataset
 The dataset I used for training was from [RWFD](https://github.com/X-zhangyang/Real-World-Masked-Face-Dataset) Dataset.
